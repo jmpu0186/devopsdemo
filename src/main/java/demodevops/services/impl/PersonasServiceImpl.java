@@ -86,7 +86,12 @@ public  class PersonasServiceImpl implements PersonasService{
 	private BeanUpdate existeDni(int dni) {
 		BeanUpdate rpta = new BeanUpdate();
 		if(Constantes.BDPERSONAS==null)
+		{
 			rpta.setExiste(false);
+			Constantes.BDPERSONAS = new ArrayList();
+			
+		}
+			
 		Iterator it = Constantes.BDPERSONAS.iterator();
 		int i=0;
 		while(it.hasNext()) {
