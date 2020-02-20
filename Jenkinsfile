@@ -7,7 +7,7 @@
 	def clean() {
      stage "clean"
      docker.image('maven:3-alpine').inside('-v /root/.m2:/root/.m2'){
-        sh 'mvn clean'
+        sh 'mvn --version'
      }
      
     }
