@@ -26,7 +26,7 @@ def buildimage(){
 }
 
 def pushimage(){
-	staget "pushimage"
+	stage "pushimage"
 	docker.withRegistry('https://434449356981.dkr.ecr.sa-east-1.amazonaws.com', 'ecr:sa-east-1:AWS_ECR') {
             sh "docker push 434449356981.dkr.ecr.sa-east-1.amazonaws.com/docker-in-aws/demo:${env.BUILD_ID}"
         }
