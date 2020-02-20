@@ -46,7 +46,7 @@ def pushimage(){
 	def pruebasfuncionales(){
 		stage("pruebas funcionales"){
 			docker.image('jmeter').inside('-v /root/.m2:/root/.m2'){
-				./jmeter -n -t DEMODEVOPS.jmx -Jthreads=2 -l ${WORKSPACE}/result.jtl
+				sh "jmeter -n -t DEMODEVOPS.jmx -Jthreads=2 -l ${WORKSPACE}/result.jtl"
 			}
 		}
 	}
