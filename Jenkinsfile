@@ -18,6 +18,12 @@
 		sh 'mvn package -DskipTests -Ddockerfile.skip'
      }
 	}
+
+def buildimage(){
+	stage "buildimage"
+	sh "docker build --build-arg APP_NAME=devopsapp -t 434449356981.dkr.ecr.sa-east-1.amazonaws.com/docker-in-aws/demo:${env.BUILD_ID} -f ${WORKSPACE}/Dockerfile ."
+
+}
 	
 	def testunit(){
 		 stage("testunit") {
@@ -35,4 +41,5 @@
 		clean()
 		testunit()
 		empaquetar()
+		buildimage()
 	}
