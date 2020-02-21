@@ -64,5 +64,5 @@ def pushimage(){
 		empaquetar()
 		buildimage()
 		pruebasfuncionales()
-		//pushimage()
+		pushimage()
 	}
