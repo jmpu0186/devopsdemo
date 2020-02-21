@@ -44,6 +44,7 @@ def pushimage(){
 	}
 	
 	def pruebasfuncionales(){
+		stage "pruebas funcionales"
 		    parallel IniciaAplicacion: {
 			    try{	
 			    	sh "docker run --name=demodevops-${env.BUILD_ID} -p 8080:8080 434449356981.dkr.ecr.sa-east-1.amazonaws.com/docker-in-aws/demo:${env.BUILD_ID}"
