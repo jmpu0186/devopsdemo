@@ -56,6 +56,6 @@ def pushimage(){
 		testunit()
 		empaquetar()
 		buildimage()
-		pruebasfuncionales()
+		//pruebasfuncionales()
 		//pushimage()
 	}
