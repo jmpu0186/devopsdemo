@@ -21,7 +21,7 @@
 
 def buildimage(){
 	stage "buildimage"
-	sh "docker build --name=demodevops-${env.BUILD_ID} -t 434449356981.dkr.ecr.sa-east-1.amazonaws.com/docker-in-aws/demo:${env.BUILD_ID} -f ${WORKSPACE}/Dockerfile ."
+	sh "docker build -t 434449356981.dkr.ecr.sa-east-1.amazonaws.com/docker-in-aws/demo:${env.BUILD_ID} -f ${WORKSPACE}/Dockerfile ."
 
 }
 
@@ -45,8 +45,17 @@ def pushimage(){
 	
 	def pruebasfuncionales(){
 		stage("pruebas funcionales"){
-			 sh "docker run -p 8080:8080 434449356981.dkr.ecr.sa-east-1.amazonaws.com/docker-in-aws/demo:${env.BUILD_ID}"
-			 build job: 'jobjmter'
+			parallel {
+				stage('Iniciar Aplicacion') {
+					sh "docker run --name=demodevops-${env.BUILD_ID} -p 8080:8080 434449356981.dkr.ecr.sa-east-1.amazonaws.com/docker-in-aws/demo:${env.BUILD_ID}"
+				}
+				stage('Iniciar pruebas de rendimiento') {
+					build job: 'jobjmter'
+					sh "docker stop demodevops-${env.BUILD_ID}"
+				}
+			}
+			 
+			 
 		}
 	}
 	
@@ -56,6 +65,6 @@ def pushimage(){
 		testunit()
 		empaquetar()
 		buildimage()
-		//pruebasfuncionales()
+		pruebasfuncionales()
 		//pushimage()
 	}
