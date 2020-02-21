@@ -45,6 +45,7 @@ def pushimage(){
 	
 	def pruebasfuncionales(){
 		stage("pruebas funcionales"){
+			 sh "docker run 434449356981.dkr.ecr.sa-east-1.amazonaws.com/docker-in-aws/demo:${env.BUILD_ID} -p 8080:8080"
 			 build job: 'jobjmter'
 		}
 	}
@@ -55,6 +56,6 @@ def pushimage(){
 		testunit()
 		empaquetar()
 		pruebasfuncionales()
-		//buildimage()
+		buildimage()
 		//pushimage()
 	}
