@@ -21,7 +21,7 @@
 
 def buildimage(){
 	stage "buildimage"
-	sh "docker build -t 434449356981.dkr.ecr.sa-east-1.amazonaws.com/docker-in-aws/demo:${env.BUILD_ID} -f ${WORKSPACE}/Dockerfile ."
+	sh "docker build --name=demodevops -t 434449356981.dkr.ecr.sa-east-1.amazonaws.com/docker-in-aws/demo:${env.BUILD_ID} -f ${WORKSPACE}/Dockerfile ."
 
 }
 
