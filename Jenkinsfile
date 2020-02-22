@@ -43,7 +43,7 @@ def pushimage(){
                        }
 	}
 	
-	def pruebasfuncionales(){
+	def pruebasfuncionales_old(){
 		stage "pruebas funcionales"
 		    parallel IniciaAplicacion: {
 			    try{	
@@ -57,6 +57,29 @@ def pushimage(){
 		    }
 	}
 	
+	def pruebasfuncionales(){
+		stage ("pruebas funcionales"){
+		 
+			    	sh "docker run --name=demodevops-${env.BUILD_ID} --env APP_VERSION=${env.BUILD_ID} -p 8080:8080 -d 434449356981.dkr.ecr.sa-east-1.amazonaws.com/docker-in-aws/demo:${env.BUILD_ID}"
+					build job: 'jobjmter'
+					sh "docker stop demodevops-${env.BUILD_ID}"
+		    }
+	}
+	
+	def autorizacionDespliegue() {
+     stage "autorización"
+     
+       timeout(time: 180, unit: 'MINUTES') {
+            input message: "¿Desea desplegar el componente?"
+        }
+     }
+     
+     def desplegarEnInstanciaEC2(){
+    	sshagent(credentials : ['AWS_EC2_INSTANCIA1']) {
+        	sh 'ssh -t -t ec2-user@ec2-18-228-117-167.sa-east-1.compute.amazonaws.com -o StrictHostKeyChecking=no "docker stop $(docker ps -a -q); docker run --env APP_VERSION=${env.BUILD_ID} -p 80:8080 -d 434449356981.dkr.ecr.sa-east-1.amazonaws.com/docker-in-aws/demo:${env.BUILD_ID}"'
+    	}
+	}
+	
 	node{
 		descargarFuentes()
 		clean()
@@ -65,4 +88,6 @@ def pushimage(){
 		buildimage()
 		pruebasfuncionales()
 		pushimage()
+		autorizacionDespliegue()
+		desplegarEnInstanciaEC2()
 	}

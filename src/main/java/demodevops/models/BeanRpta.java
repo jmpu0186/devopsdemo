@@ -4,6 +4,14 @@ public class BeanRpta {
 	
 	private String codigo_retorno;
 	private String mensaje;
+	private String version;
+	
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
+	}
 	public String getCodigo_retorno() {
 		return codigo_retorno;
 	}

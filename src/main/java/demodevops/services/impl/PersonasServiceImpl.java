@@ -13,8 +13,12 @@ import demodevops.models.BeanUpdate;
 import demodevops.models.Persona;
 import demodevops.models.PersonaApiRpta;
 import demodevops.services.PersonasService;
+import io.micronaut.context.annotation.Value;
 @Singleton
 public  class PersonasServiceImpl implements PersonasService{
+	
+	@Value("${app.version}")
+	private String APP_VERSION;
 
 	@Override
 	public PersonaApiRpta getPersonas() {
@@ -24,6 +28,7 @@ public  class PersonasServiceImpl implements PersonasService{
 		{
 			Constantes.BDPERSONAS = new ArrayList();
 		}
+		rpta.setVersion(APP_VERSION);
 		rpta.setCodigo_retorno("0000");
 		rpta.setMensaje("Consulta OK");
 		rpta.setPersonas(Constantes.BDPERSONAS);
@@ -34,6 +39,7 @@ public  class PersonasServiceImpl implements PersonasService{
 	public BeanRpta addPersona(Persona persona) {
 		// TODO Auto-generated method stub
 		BeanRpta rpta = new BeanRpta();
+		rpta.setVersion(APP_VERSION);
 		if(!this.existeDni(persona.getDni()).isExiste())
 		{
 			Constantes.BDPERSONAS.add(persona);
@@ -52,6 +58,7 @@ public  class PersonasServiceImpl implements PersonasService{
 		// TODO Auto-generated method stub
 		BeanRpta rpta = new BeanRpta();
 		BeanUpdate update = this.existeDni(persona.getDni());
+		rpta.setVersion(APP_VERSION);
 		if(update.isExiste())
 		{
 			Constantes.BDPERSONAS.set(update.getId(),persona);
@@ -69,6 +76,7 @@ public  class PersonasServiceImpl implements PersonasService{
 	public BeanRpta deletePersona(int dni) {
 		// TODO Auto-generated method stub
 		BeanRpta rpta = new BeanRpta();
+		rpta.setVersion(APP_VERSION);
 		BeanUpdate update = this.existeDni(dni);
 		if(update.isExiste())
 		{

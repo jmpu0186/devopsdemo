@@ -1,3 +1,5 @@
 micronaut:
   application:
     name: demodevops
+app:
+  version: 1
