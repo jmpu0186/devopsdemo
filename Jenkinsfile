@@ -76,7 +76,7 @@ def pushimage(){
      
      def desplegarEnInstanciaEC2(){
      	stage ("despliegue componente en instancia"){
-     	def version=${env.BUILD_ID}
+     	def version=env.BUILD_ID
 	    	sshagent(credentials : ['AWS_EC2_INSTANCIA1']) {
         		def commandToRun = "/home/ec2-user/stopApp.sh; docker run --env APP_VERSION=${VERSION} -p 80:8080 -d 434449356981.dkr.ecr.sa-east-1.amazonaws.com/docker-in-aws/demo:${VERSION}"
         		sh "ssh -t -t ec2-user@ec2-18-228-117-167.sa-east-1.compute.amazonaws.com -o StrictHostKeyChecking=no /bin/bash -c '\"${commandToRun}\"'"
